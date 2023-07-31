@@ -24,7 +24,14 @@
 ;; * (my-but-last '(a b c d))
 ;; (C D)
 
+(define (my-but-last lst)
+  (cond
+   [(null? lst) #f]
+   [(null? (cdr lst)) #f]
+   [(null? (cddr lst)) lst]
+   [else (my-but-last (cdr lst))]))
 
+(test "P02" '(c d) (my-but-last '(a b c d)))
 
 
 ;; P03 (*) Find the K'th element of a list.
