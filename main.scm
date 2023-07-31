@@ -1,6 +1,8 @@
 ;; L-99: Ninety-Nine Lisp Problems
 ;; Based on a Prolog problem list by werner.hett@hti.bfh.ch
 
+(import test)
+
 ;;; Working with lists
 
 ;; P01 (*) Find the last box of a list.
@@ -8,7 +10,13 @@
 ;; * (my-last '(a b c d))
 ;; (D)
 
+(define (my-last lst)
+  (cond
+   [(null? lst) #f]
+   [(null? (cdr lst)) lst]
+   [else (my-last (cdr lst))]))
 
+(test "P01" '(d) (my-last '(a b c d))) 
 
 
 ;; P02 (*) Find the last but one box of a list.
