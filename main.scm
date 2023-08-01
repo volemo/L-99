@@ -40,7 +40,12 @@
 ;; * (element-at '(a b c d e) 3)
 ;; C
 
+(define (my-element-at lst k)
+  (if (= k 1)
+      (car lst)
+      (my-element-at (cdr lst) (- k 1))))
 
+(test "P03" 'c (my-element-at '(a b c d e) 3))
 
 
 ;; P04 (*) Find the number of elements of a list.
