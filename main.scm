@@ -50,8 +50,12 @@
 
 ;; P04 (*) Find the number of elements of a list.
 
-
-
+(define (my-length lst)
+  (let count ([lst lst]
+	      [c 0])
+    (if (null? lst)
+	c
+	(count (cdr lst) (+ c 1)))))
 
 
 ;; P05 (*) Reverse a list.
