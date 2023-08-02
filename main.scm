@@ -60,7 +60,14 @@
 
 ;; P05 (*) Reverse a list.
 
+(define (my-reverse lst)
+  (let reverse ([lst lst]
+		[tsl '()])
+    (if (null? lst)
+	tsl
+	(reverse (cdr lst) (cons (car lst) tsl)))))
 
+(test "P05" '(d c b a) (my-reverse '(a b c d)))
 
 
 ;; P06 (*) Find out whether a list is a palindrome.
