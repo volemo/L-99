@@ -73,7 +73,24 @@
 ;; P06 (*) Find out whether a list is a palindrome.
 ;; A palindrome can be read forward or backward; e.g. (x a m a x).
 
+(define (my-palindrome? lst)
+  (if (> 2 (my-length lst))
+      #t
+      (let palindrome? ([lst lst]
+			[tsl (my-reverse lst)]
+			[c (floor (/ (my-length lst) 2))])
+	(cond
+	 [(= 0 c) #t]
+	 [(eq? (car lst) (car tsl))
+	  (palindrome? (cdr lst) (cdr tsl) (- c 1))]
+	 [else #f]))))
 
+(test "P06" #t (my-palindrome? '(a b c b a)))
+(test "P06" #t (my-palindrome? '(a a)))
+(test "P06" #t (my-palindrome? '(a)))
+(test "P06" #t (my-palindrome? '()))
+(test "P06" #f (my-palindrome? '(a b)))
+(test "P06" #f (my-palindrome? '(a b c)))
 
 
 ;; P07 (**) Flatten a nested list structure.
