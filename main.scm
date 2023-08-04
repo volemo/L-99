@@ -102,7 +102,15 @@
 
 ;; Hint: Use the predefined functions list and append.
 
+(define (my-flatten lst)
+  (cond
+   [(null? lst) lst]
+   [(list? (car lst))
+    (append (my-flatten (car lst))
+	    (my-flatten (cdr lst)))]
+   [else (cons (car lst) (my-flatten (cdr lst)))]))
 
+(test "P07" '(a b c d e) (my-flatten '(a (b (c d) e))))
 
 
 ;; P08 (**) Eliminate consecutive duplicates of list elements.
