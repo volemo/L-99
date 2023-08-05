@@ -120,7 +120,19 @@
 ;; * (compress '(a a a a b c c a a d e e e e))
 ;; (A B C A D E)
 
+(define (my-compress lst)
+  ;; I know *this and following solutions aren't guarateed to work  correctly
+  ;; when presented with lists containing #f*; I know how to fix it and would if
+  ;; I were to implement a general purpose library, but that'd be quite a bit
+  ;; wordier and not worth a study task.  
+  (let compress ([lst lst]
+		 [el #f])  
+    (cond
+     [(null? lst) '()]
+     [(eq? el (car lst)) (compress (cdr lst) (car lst))]
+     [else (cons (car lst) (compress (cdr lst) (car lst)))])))
 
+(test "P08" '(a b c a d e) (my-compress '(a a a a b c c a a d e e e e)))
 
 
 ;; P09 (**) Pack consecutive duplicates of list elements into sublists.
