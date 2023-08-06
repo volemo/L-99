@@ -142,7 +142,21 @@
 ;; * (pack '(a a a a b c c a a d e e e e))
 ;; ((A A A A) (B) (C C) (A A) (D) (E E E E))
 
+(define (my-pack lst)
+  (if (null? lst)
+      '()
+      (let pack ([lst (cdr lst)]
+		 [els (cons (car lst) '())])
+	(cond
+	 [(null? lst) (cons els '())]
+	 [(eq? (car els) (car lst))
+	  (pack (cdr lst) (cons (car lst) els))]
+	 [else (cons els (my-pack lst))]))))
 
+(my-pack '(a a a a b c c a a d e e e e))
+
+(test "P09" '((a a a a) (b) (c c) (a a) (d) (e e e e))
+      (my-pack '(a a a a b c c a a d e e e e)))
 
 
 ;; P10 (*) Run-length encoding of a list.
