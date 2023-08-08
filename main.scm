@@ -183,7 +183,18 @@
 ;; * (encode-modified '(a a a a b c c a a d e e e e)) 
 ;; ((4 A) B (2 C) (2 A) D (4 E))
 
+(define (my-encode-modified lst)
+  (let encode ([lst (my-pack lst)])
+    (if (null? lst)
+	'()
+	(let ([l (my-length (car lst))]
+	      [el (caar lst)]
+	      [rest (encode (cdr lst))])
+	  (if (= 1 l)
+	      (cons el rest)
+	      (cons (list l el) rest))))))
 
+(test "P11" '((4 a) b (2 c) (2 a) d (4 e)) (my-encode-modified '(a a a a b c c a a d e e e e)))
 
 
 ;; P12 (**) Decode a run-length encoded list.
