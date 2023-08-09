@@ -200,7 +200,21 @@
 ;; P12 (**) Decode a run-length encoded list.
 ;; Given a run-length code list generated as specified in problem P11. Construct its uncompressed version.
 
+(define (my-decode lst)
+  (if (null? lst)
+      '()
+      (letrec ([decompress
+		(lambda (n el)
+		  (if (< 0 n)
+		      (cons el (decompress (- n 1) el))
+		      '()))]
+	       [enc (car lst)]
+	       [rest (my-decode (cdr lst))])
+	(if (list? enc)
+	    (append (apply decompress enc) rest)
+	    (cons enc rest)))))
 
+(test "P12" '(a a a a b c c a a d e e e e) (my-decode (my-encode-modified '(a a a a b c c a a d e e e e))))
 
 
 ;; P13 (**) Run-length encoding of a list (direct solution).
