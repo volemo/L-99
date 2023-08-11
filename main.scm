@@ -246,7 +246,12 @@
 ;; * (dupli '(a b c c d))
 ;; (A A B B C C C C D D)
 
- 
+(define (my-dupli lst)
+  (if (null? lst)
+      '()
+      (cons (car lst) (cons (car lst) (my-dupli (cdr lst))))))
+
+(test "P14" '(a a b b c c c c d d) (my-dupli '(a b c c d))) 
 
 
 ;; P15 (**) Replicate the elements of a list a given number of times.
