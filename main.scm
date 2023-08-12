@@ -259,7 +259,16 @@
 ;; * (repli '(a b c) 3)
 ;; (A A A B B B C C C)
 
+(define (my-repli lst n)
+  (letrec [(repeat (lambda (el n)
+		     (if (= 0 n)
+			 '()
+			 (cons el (repeat el (- n 1))))))]
+    (if (null? lst)
+	'()
+	(append (repeat (car lst) n) (my-repli (cdr lst) n)))))
 
+(test "P15" '(a a a b b b c c c) (my-repli '(a b c) 3))
 
 
 ;; P16 (**) Drop every N'th element from a list.
