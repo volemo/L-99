@@ -276,7 +276,16 @@
 ;; * (drop '(a b c d e f g h i k) 3)
 ;; (A B D E G H K)
 
+(define (my-drop lst n)
+  (let drop ([lst lst]
+	     [n n]
+	     [k 1])
+    (cond
+     [(null? lst) '()]
+     [(= n k) (drop (cdr lst) n 1)]
+     [else (cons (car lst) (drop (cdr lst) n (+ k 1)))])))
 
+(test "P16" '(a b d e g h k) (my-drop '(a b c d e f g h i k) 3))
 
 
 ;; P17 (*) Split a list into two parts; the length of the first part is given.
