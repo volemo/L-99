@@ -295,7 +295,16 @@
 ;; * (split '(a b c d e f g h i k) 3)
 ;; ( (A B C) (D E F G H I K))
 
+(define (my-split lst n)
+  (cond
+   [(null? lst) '()]
+   [(< 0 n) (let* ([rest (my-split (cdr lst) (- n 1))]
+		   [lhs (car rest)]
+		   [rhs (cdr rest)])
+	      (cons (cons (car lst) lhs) rhs))]
+   [else (list '() lst)]))
 
+(test "P17" '((a b c) (d e f g h i k)) (my-split '(a b c d e f g h i k) 3))
 
 
 ;; P18 (**) Extract a slice from a list.
