@@ -314,7 +314,16 @@
 ;; * (slice '(a b c d e f g h i k) 3 7)
 ;; (C D E F G)
 
+(define (my-slice lst ks ke)
+  (let ([rest (lambda ()
+		(my-slice (cdr lst) (- ks 1) (- ke 1)))])
+    (cond
+     [(null? lst) '()]
+     [(< 1 ks) (rest)]
+     [(< 0 ke) (cons (car lst) (rest))]
+     [else '()])))
 
+(test "P18" '(c d e f g) (my-slice '(a b c d e f g h i k) 3 7))
 
 
 ;; P19 (**) Rotate a list N places to the left.
