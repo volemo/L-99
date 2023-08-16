@@ -336,7 +336,15 @@
 
 ;; Hint: Use the predefined functions length and append, as well as the result of problem P17.
 
+(define (my-rotate lst n)
+  (let* ([l (my-length lst)]
+	 [k (if (< 0 n) n (+ l n))]
+	 [lhs (my-slice lst 1 k)]
+	 [rhs (my-slice lst (+ k 1) l)])
+    (append rhs lhs)))
 
+(test "P17" '(d e f g h a b c) (my-rotate '(a b c d e f g h) 3))
+(test "P17" '(g h a b c d e f) (my-rotate '(a b c d e f g h) -2))
 
 
 ;; P20 (*) Remove the K'th element from a list.
