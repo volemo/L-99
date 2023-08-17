@@ -352,7 +352,13 @@
 ;; * (remove-at '(a b c d) 2)
 ;; (A C D)
 
+(define (my-remove-at lst k)
+    (cond
+     [(null? lst) '()]
+     [(= 1 k) (cdr lst)]
+     [else (cons (car lst) (my-remove-at (cdr lst) (- k 1)))]))
 
+(test "P20" '(a c d) (my-remove-at '(a b c d) 2))
 
 
 ;; P21 (*) Insert an element at a given position into a list.
