@@ -366,7 +366,13 @@
 ;; * (insert-at 'alfa '(a b c d) 2)
 ;; (A ALFA B C D)
 
+(define (my-insert-at s lst k)
+  (cond
+   [(null? lst) '()]
+   [(= 1 k) (cons s lst)]
+   [else (cons (car lst) (my-insert-at s (cdr lst) (- k 1)))]))
 
+(test "P21" '(a alpha b c d) (my-insert-at 'alpha '(a b c d) 2))
 
 
 ;; P22 (*) Create a list containing all integers within a given range.
