@@ -381,7 +381,12 @@
 ;; * (range 4 9)
 ;; (4 5 6 7 8 9)
 
+(define (my-range ks ke)
+  (if (> ks ke)
+      '()
+      (cons ks (my-range (+ ks 1) ke))))
 
+(test "P22" '(4 5 6 7 8 9) (my-range 4 9))
 
 
 ;; P23 (**) Extract a given number of randomly selected elements from a list.
