@@ -2,6 +2,14 @@
 ;; Based on a Prolog problem list by werner.hett@hti.bfh.ch
 
 (import test)
+(import (chicken random))
+
+(define-syntax with-determinate-random
+  (syntax-rules ()
+    [(_ body ...)
+     (begin
+       (set-pseudo-random-seed! "this is some very random data")           
+       body ...)]))
 
 ;;; Working with lists
 
@@ -397,7 +405,19 @@
 
 ;; Hint: Use the built-in random number generator and the result of problem P20.
 
+(define (my-rnd-select lst n)
+  ;; Totally inefficient! That's not what we're here for, are we?
+  (let rnd-select ([lst lst]
+		   [k (- (+ 1 (my-length lst)) n)])
+      (cond
+       [(null? lst) '()]
+       [(= k 0) lst]
+       [else (rnd-select
+	      (my-remove-at lst (pseudo-random-integer (my-length lst)))
+	      (- k 1))])))
 
+(test "P23" '(f g h) (with-determinate-random
+		      (my-rnd-select '(a b c d e f g h) 3)))
 
 
 ;; P24 (*) Lotto: Draw N different random numbers from the set 1..M.
