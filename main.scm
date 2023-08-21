@@ -428,7 +428,11 @@
 
 ;; Hint: Combine the solutions of problems P22 and P23.
 
+(define (my-lotto-select n m)
+  (my-rnd-select (my-range 1 m) n))
 
+(test "P24" '(1 9 19 23 24 40 43 46 49)
+      (with-determinate-random (my-lotto-select 6 49)))
 
 
 ;; P25 (*) Generate a random permutation of the elements of a list.
