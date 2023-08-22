@@ -442,7 +442,15 @@
 
 ;; Hint: Use the solution of problem P23.
 
+(define (my-rnd-permu lst)
+  (if (null? lst)
+      '()
+      (let* ([k (+ 1 (pseudo-random-integer (my-length lst)))]
+	     [el (my-element-at lst k)]
+	     [rest (my-remove-at lst k)])
+	(cons el (my-rnd-permu rest)))))
 
+(test "P25" '(f c b a d e) (with-determinate-random (my-rnd-permu '(a b c d e f))))
 
 
 ;; P26 (**) Generate the combinations of K distinct objects chosen from the N elements of a list
