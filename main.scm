@@ -460,7 +460,19 @@
 ;; * (combination 3 '(a b c d e f))
 ;; ((A B C) (A B D) (A B E) ... )
 
+(define (my-combination k lst)
+  (cond
+   [(>= k (my-length lst)) (list lst)]
+   [(= k 0) '(())]
+   [else (append
+	  (map (lambda (combs)
+		 (cons (car lst) combs))
+	       (my-combination (- k 1) (cdr lst)))
+	  (my-combination k (cdr lst)))]))
 
+
+(test "P26" '((a b) (a c) (a d) (b c) (b d) (c d))
+      (my-combination 2 '(a b c d)))
 
 
 ;; P27 (**) Group the elements of a set into disjoint subsets.
