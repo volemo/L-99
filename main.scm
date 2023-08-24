@@ -494,7 +494,42 @@
 
 ;; You may find more about this combinatorial problem in a good book on discrete mathematics under the term "multinomial coefficients".
 
+(define (my-in? el lst)
+  (cond
+   [(null? lst) #f]
+   [(eqv? el (car lst)) #t]
+   [else (my-in? el (cdr lst))]))
 
+(define (my-list-difference a b)
+  (cond
+   [(null? a) '()]
+   [(my-in? (car a) b) (my-list-difference (cdr a) b)]
+   [else (cons (car a)
+	       (my-list-difference (cdr a) b))]))
+
+(define (my-group elements sizes)
+  (if (or (null? elements)
+	  (null? sizes))
+      '(())
+      (let ([combs (my-combination (car sizes) elements)])
+	(map (lambda (comb)
+	       (car (map (lambda (grouping)
+			   (cons comb grouping))
+			 (my-group (my-list-difference elements comb)
+				   (cdr sizes)))))
+	     combs))))
+
+(test "P27" '(((a b) (c d e))
+	      ((a c) (b d e))
+	      ((a d) (b c e))
+	      ((a e) (b c d))
+	      ((b c) (a d e))
+	      ((b d) (a c e))
+	      ((b e) (a c d))
+	      ((c d) (a b e))
+	      ((c e) (a b d))
+	      ((d e) (a b c)))
+      (my-group '(a b c d e) '(2 3)))
 
 
 ;; P28 (**) Sorting a list of lists according to length of sublists
