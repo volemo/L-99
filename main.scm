@@ -546,10 +546,60 @@
 ;; ((I J K L) (O) (A B C) (F G H) (D E) (D E) (M N))
 
 ;; Note that in the above example, the first two lists in the result have length 4 and 1, both lengths appear just once. The third and forth list have length 3 which appears twice (there are two list of this length). And finally, the last three lists have length 2. This is the most frequent length.
-;; Arithmetic
 
+(define (my-sort lst rating-func)
+  (define  (strip-of-rating lst)
+    (if (null? lst)
+	'()
+	(cons (cadar lst) (strip-of-rating (cdr lst)))))
+  (strip-of-rating
+   (let sort ([lst (rating-func lst)])
+     (cond [(null? lst) '()]
+	   [(null? (cdr lst)) lst]
+	   [else (let* ([rest (sort (cdr lst))]
+		       [this (car lst)]
+		       [next (car rest)]
+		       [tail (cdr rest)])
+		   (if (> (car this) (car next))
+		       (sort (cons next (cons this tail)))
+		       (cons this rest)))]))))
 
+(define (my-lsort lst)
+  (my-sort lst
+	   (lambda (lst)
+	     (let rate ([lst lst])
+	       (if (not (null? lst))
+		   (cons (list (my-length (car lst))
+			       (car lst))
+			 (rate (cdr lst)))
+		   '())))))
   
+(define (my-lfsort lst)
+  (my-sort lst
+	   (lambda (lst)
+	     (define ratings (make-parameter '()))
+	     (let rate ([lst lst])
+	       (if (not (null? lst))
+		   (let* ([el (car lst)]
+			  [l (my-length el)]
+			  ;; I update the alist of frequencies before I call (rate (cdr lst))
+			  ;; so that the last (rate ...) will have a complete rating table. 
+			  [freq (alist-ref l (ratings) eqv? 0)] 
+			  [newfreq (+ 1 freq)]
+			  [_ (ratings (alist-update l newfreq (ratings)))]
+			  [rest (rate (cdr lst))]
+			  [rating (alist-ref l (ratings) eqv? 0)])
+		     (cons (list rating el)
+			   rest))
+		   '())))))
+
+(test "P30" '((o) (d e) (d e) (m n) (a b c) (f g h) (i j k l))
+      (my-lsort '((a b c) (d e) (f g h) (d e) (i j k l) (m n) (o))))
+(test "P30" '((i j k l) (o) (a b c) (f g h) (d e) (d e) (m n))
+      (my-lfsort '((a b c) (d e) (f g h) (d e) (i j k l) (m n) (o))))
+
+
+;; Arithmetic
 
 ;; P31 (**) Determine whether a given integer number is prime.
 ;; Example:
