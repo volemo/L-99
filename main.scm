@@ -606,7 +606,16 @@
 ;; * (is-prime 7)
 ;; T
 
+(define (my-is-prime n)
+  (let check ([number n]
+	      [candidate 2]
+	      [bound (ceiling (sqrt n))])
+    (cond
+     [(>= candidate bound) #t]
+     [(= 0 (remainder number candidate)) #f]
+     [else (check number (+ 1 candidate) bound)])))
 
+(test "P31" #t (my-is-prime 7))
 
 
 ;; P32 (**) Determine the greatest common divisor of two positive integer numbers.
