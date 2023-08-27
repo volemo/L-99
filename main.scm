@@ -624,7 +624,14 @@
 ;; * (gcd 36 63)
 ;; 9
 
+(define (my-gcd a b)
+  (cond
+   [(= a b)
+    a]
+   [(> a b) (my-gcd (- a b) b)]
+   [else (my-gcd a (- b a))]))
 
+(test "P32" 9 (my-gcd 36 63))
 
 
 ;; P33 (*) Determine whether two positive integer numbers are coprime.
