@@ -640,7 +640,10 @@
 ;; * (coprime 35 64)
 ;; T
 
+(define (my-coprime a b)
+  (= 1 (my-gcd a b)))
 
+(test "P33" #t (my-coprime 35 64)
 
 
 ;; P34 (**) Calculate Euler's totient function phi(m).
