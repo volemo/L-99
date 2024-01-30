@@ -1,0 +1,2 @@
+* Ninety-Nine Lisp Problems
+My own take on the famous [[http://www.ic.unicamp.br/~meidanis/courses/mc336/2006s2/funcional/L-99_Ninety-Nine_Lisp_Problems.html][99 Lisp problems]] (from [[http://www.ic.unicamp.br/~meidanis/courses/mc336/2009s2/prolog/problemas/][99 Prolog problems]]).
